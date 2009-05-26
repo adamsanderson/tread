@@ -1,3 +1,5 @@
+CTRL_ENTER = "\342\200\250" # ctrl-enter (on a mac anyways...)
+
 Shoes.app do
     background "#ddd"
     style(Para, :font => "Monospace 12px")
@@ -6,7 +8,12 @@ Shoes.app do
       para "Welcome to tread"
     end
     flow do 
-      @input = edit_line(:width=> -60)
+      @input = edit_box(:height=>50, :width=> -60) do |input|
+        if input.text =~ /#{CTRL_ENTER}\Z/ 
+          run_command(input.text.chomp(CTRL_ENTER))
+        end
+      end
+      
       button("run"){
         run_command(@input.text)
       }
