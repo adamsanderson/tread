@@ -80,8 +80,10 @@ Shoes.app do
       rescue Exception=>ex
         @console.append do 
           para(ex.message, :stroke=>"#FF0000")
-        end
+        end        
       end
+      
+      @console.scroll_top = @console.scroll_max
       @input.text = ''
     end
 end
