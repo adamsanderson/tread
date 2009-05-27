@@ -33,9 +33,15 @@ Shoes.app do
           para(result.inspect)
         end
       rescue Exception=>ex
-        @console.append do 
-          para(ex.message, :stroke=>"#FF0000")
-        end        
+        slot = nil
+        @console.append do
+          slot = stack do
+            background '#FFCCCC'..'#FFEEEE'
+            stroke '#FFEEEE'
+            line 0,0, width,0
+            p = para(ex.message, :stroke=>"#FF0000")
+          end
+        end 
       end
       
       @console.scroll_top = @console.scroll_max
