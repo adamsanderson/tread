@@ -33,13 +33,20 @@ Shoes.app do
           para(result.inspect)
         end
       rescue Exception=>ex
-        slot = nil
+        
         @console.append do
-          slot = stack do
+          stack do
             background '#FFCCCC'..'#FFEEEE'
             stroke '#FFEEEE'
             line 0,0, width,0
-            p = para(ex.message, :stroke=>"#FF0000")
+            para(ex.message, :stroke=>"#FF0000")
+            trace = stack do
+              ex.backtrace.each do |line|
+                para(line, :stroke=>"#FF6666", :margin=>2)
+              end
+              hide
+            end
+            click{ trace.toggle }
           end
         end 
       end
