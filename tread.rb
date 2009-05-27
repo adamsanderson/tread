@@ -27,7 +27,7 @@ Shoes.app do
         
     def run_command(command)
       begin
-        result = self.instance_eval(command)
+        result = eval(command, TOPLEVEL_BINDING)
         @console.append do 
           para(command, :stroke=>"#666")
           para(result.inspect)
@@ -39,10 +39,12 @@ Shoes.app do
             background '#FFCCCC'..'#FFEEEE'
             stroke '#FFEEEE'
             line 0,0, width,0
+            para(command, :stroke=>"#FF0000")
             para(ex.message, :stroke=>"#FF0000")
             trace = stack do
+              line 0,0, width,0
               ex.backtrace.each do |line|
-                para(line, :stroke=>"#FF6666", :margin=>2)
+                para(line, :stroke=>"#FF3333", :margin=>2)
               end
               hide
             end
