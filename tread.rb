@@ -1,7 +1,5 @@
 require 'expression_checker'
 
-CTRL_ENTER = "\342\200\250" # ctrl-enter (on a mac anyways...)
-
 Shoes.app do
     background "#ddd"
     style(Para, :font => "Monospace 12px")
@@ -15,7 +13,6 @@ Shoes.app do
       @input = edit_box(:height=>50, :width=> -60) do |input|
         text = input.text
         run_command(text.chomp("\n")) if text =~ /\n\Z/ && @exp_checker.valid?(text)
-        run_command(text.chomp(CTRL_ENTER)) if text =~ /#{CTRL_ENTER}\Z/ 
       end
       
       button("run"){
