@@ -1,53 +1,6 @@
-require 'irb/ruby-lex'
-require 'stringio'
+require 'expression_checker'
 
 CTRL_ENTER = "\342\200\250" # ctrl-enter (on a mac anyways...)
-
-# Adapted from the wizardly expert-irb.rb's MimickIRB
-class ExpressionChecker < RubyLex
-  def initialize
-    super
-    reset!
-  end
-  
-  def valid?(str)
-    #str = str.chomp("\n")+"\n"
-    @io << str
-    @io.rewind
-    l = lex
-    
-    ready = l && !l.empty? && !(@ltype or @continue or @indent > 0)
-    reset!
-    
-    ready
-  end
-
-  def reset!
-    set_input(StringIO.new)
-    @seek = 0
-    @exp_line_no = @line_no = 1
-    @base_char_no = 0
-    @char_no = 0
-    @rests = []
-    @readed = []
-    @here_readed = []
-
-    @indent = 0
-    @indent_stack = []
-    @lex_state = EXPR_BEG
-    @space_seen = false
-    @here_header = false
-
-    @continue = false
-    @line = ""
-
-    @skip_space = false
-    @readed_auto_clean_up = false
-    @exception_on_syntax_error = true
-
-    @prompt = nil
-  end
-end
 
 Shoes.app do
     background "#ddd"
